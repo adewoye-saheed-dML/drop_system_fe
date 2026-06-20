@@ -12,6 +12,9 @@ import {
   
   import OrderPage
   from '../pages/OrderPage';
+
+  import SuccessPage
+from '../pages/SuccessPage';
   
   export default function AppRoutes() {
   
@@ -28,13 +31,21 @@ import {
             path="/reservations/:id"
             element={<ReservationPage />}
           />
+
+
   
           <Route
             path="/checkout/:id"
             element={<OrderPage />}
           />
-  
+
+            <Route
+            path="/success"
+            element={<SuccessPage />}
+            />
         </Routes>
+
+        
       </BrowserRouter>
     );
   }
