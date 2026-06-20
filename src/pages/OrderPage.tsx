@@ -59,13 +59,30 @@ import {
         </p>
   
         <button
-          onClick={() =>
-            checkoutMutation.mutate()
-          }
-          className="mt-6 px-5 py-2 bg-black text-white rounded"
-        >
-          Complete Checkout
-        </button>
+ disabled={
+   checkoutMutation.isPending
+ }
+ onClick={() =>
+   checkoutMutation.mutate()
+ }
+ className="
+ mt-6
+ px-5
+ py-2
+ bg-black
+ text-white
+ rounded
+ disabled:opacity-50
+ "
+>
+
+{
+ checkoutMutation.isPending
+ ? 'Processing...'
+ : 'Complete Checkout'
+}
+
+</button>
   
       </div>
     );
