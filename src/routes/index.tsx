@@ -32,17 +32,16 @@ from '../pages/SuccessPage';
             element={<ReservationPage />}
           />
 
-
-  
           <Route
             path="/checkout/:id"
             element={<OrderPage />}
           />
 
-            <Route
+          <Route
             path="/success"
             element={<SuccessPage />}
             />
+            
         </Routes>
 
         
