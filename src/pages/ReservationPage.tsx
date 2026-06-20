@@ -8,6 +8,9 @@ import {
   import {
     getReservation,
   } from '../api/reservations';
+
+    import Countdown
+    from '../components/Countdown';
   
   export default function ReservationPage() {
   
@@ -35,7 +38,12 @@ import {
         </div>
       );
     }
-  
+    const expired =
+    new Date(
+      data.expiresAt,
+    ).getTime()
+    <
+    new Date().getTime();
     return (
       <div className="max-w-xl mx-auto p-10">
   
@@ -60,19 +68,47 @@ import {
               {data.quantity}
             </strong>
           </p>
+
+          <p className="mt-2">
+  <strong>
+    Expires At:
+  </strong>{' '}
+  {new Date(
+    data.expiresAt,
+  ).toLocaleString()}
+</p>
+
+
+<Countdown
+  expiresAt={
+    data.expiresAt
+  }
+/>
   
         </div>
   
         <button
-          onClick={() =>
-            navigate(
-              `/checkout/${data.id}`,
-            )
-          }
-          className="mt-5 px-5 py-2 bg-black text-white rounded"
-        >
-          Proceed To Checkout
-        </button>
+  disabled={expired}
+  onClick={() =>
+    navigate(
+      `/checkout/${data.id}`,
+    )
+  }
+  className="
+    mt-6
+    px-5
+    py-2
+    bg-black
+    text-white
+    rounded
+    disabled:opacity-40
+  "
+>
+  {expired
+    ? 'Reservation Expired'
+    : 'Proceed To Checkout'
+  }
+</button>
   
       </div>
     );

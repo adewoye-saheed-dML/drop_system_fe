@@ -18,22 +18,32 @@ import {
     const navigate =
       useNavigate();
   
-    const checkoutMutation =
+      const checkoutMutation =
       useMutation({
-  
-        mutationFn: () =>
-          checkout(id!),
-  
-        onSuccess: (
-          order,
-        ) => {
-  
-          alert(
-            'Order placed successfully',
-          );
-  
-          navigate('/');
-        },
+      
+       mutationFn: () =>
+         checkout(id!),
+      
+      
+       onSuccess: () => {
+      
+         navigate('/');
+      
+       },
+      
+      
+       onError: (
+         error:any,
+       ) => {
+      
+         alert(
+          error.response?.data?.message
+          ??
+          'Checkout failed'
+         );
+      
+       }
+      
       });
   
     return (
