@@ -48,7 +48,11 @@ import {
                 {' '}
                 {order.status}
               </p>
-  
+
+              <p className="mt-2">
+             <strong>Amount:</strong>
+              ${order.amount}
+              </p>
   
             </div>
           )}

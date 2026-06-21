@@ -24,14 +24,13 @@ import {
           checkout(id!),
     
         onSuccess: (order) => {
-          navigate(
-            '/success',
-            {
-              state: {
-                order,
-              },
+          console.log('Checkout Response:', order);
+        
+          navigate('/success', {
+            state: {
+              order,
             },
-          );
+          });
         },
       
       
