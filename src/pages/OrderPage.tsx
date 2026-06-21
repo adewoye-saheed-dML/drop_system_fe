@@ -20,16 +20,19 @@ import {
   
       const checkoutMutation =
       useMutation({
-      
-       mutationFn: () =>
-         checkout(id!),
-      
-      
-       onSuccess: () => {
-      
-         navigate('/');
-      
-       },
+        mutationFn: () =>
+          checkout(id!),
+    
+        onSuccess: (order) => {
+          navigate(
+            '/success',
+            {
+              state: {
+                order,
+              },
+            },
+          );
+        },
       
       
        onError: (
