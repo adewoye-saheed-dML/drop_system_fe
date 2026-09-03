@@ -1,50 +1,45 @@
 import {
-    BrowserRouter,
-    Routes,
-    Route,
-  } from 'react-router-dom';
-  
-  import ProductsPage
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom';
+
+import ProductsPage
   from '../pages/ProductsPage';
-  
-  import ReservationPage
+
+import ReservationPage
   from '../pages/ReservationPage';
-  
-  import OrderPage
+
+import OrderPage
   from '../pages/OrderPage';
 
-  import SuccessPage
-from '../pages/SuccessPage';
-  
-  export default function AppRoutes() {
-  
-    return (
-      <BrowserRouter>
-        <Routes>
-  
-          <Route
-            path="/"
-            element={<ProductsPage />}
-          />
-  
-          <Route
-            path="/reservations/:id"
-            element={<ReservationPage />}
-          />
+import SuccessPage
+  from '../pages/SuccessPage';
 
-          <Route
-            path="/checkout/:id"
-            element={<OrderPage />}
-          />
+export default function AppRoutes() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={<ProductsPage />}
+        />
 
-          <Route
-            path="/success"
-            element={<SuccessPage />}
-            />
-            
-        </Routes>
+        <Route
+          path="/reservations/:id"
+          element={<ReservationPage />}
+        />
 
-        
-      </BrowserRouter>
-    );
-  }
+        <Route
+          path="/checkout/:id"
+          element={<OrderPage />}
+        />
+
+        <Route
+          path="/success"
+          element={<SuccessPage />}
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}

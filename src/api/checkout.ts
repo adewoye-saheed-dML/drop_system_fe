@@ -1,17 +1,15 @@
 import { api } from './client';
+import type { Order } from '../types/product';
 
-export const checkout =
-  async (
-    reservationId: string,
-  ) => {
+export async function checkout(
+  reservationId: string,
+): Promise<Order> {
+  const response = await api.post<Order>(
+    '/checkout',
+    {
+      reservationId,
+    },
+  );
 
-    const response =
-      await api.post(
-        '/checkout',
-        {
-          reservationId,
-        },
-      );
-
-    return response.data;
-  };
+  return response.data;
+}

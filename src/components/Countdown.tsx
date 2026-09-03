@@ -1,53 +1,63 @@
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useState,
+} from 'react';
 
 interface Props {
   expiresAt: string;
+  onExpired?: () => void;
+}
+
+function getSecondsRemaining(
+  expiresAt: string,
+): number {
+  const difference =
+    new Date(expiresAt).getTime() -
+    Date.now();
+
+  if (difference <= 0) {
+    return 0;
+  }
+
+  return Math.floor(
+    difference / 1000,
+  );
 }
 
 export default function Countdown({
   expiresAt,
+  onExpired,
 }: Props) {
-
-  const calculateTimeLeft = () => {
-
-    const difference =
-      new Date(expiresAt).getTime()
-      -
-      new Date().getTime();
-
-    if (difference <= 0) {
-      return 0;
-    }
-
-    return Math.floor(
-      difference / 1000,
-    );
-  };
-
-
   const [seconds, setSeconds] =
-    useState(
-      calculateTimeLeft(),
+    useState(() =>
+      getSecondsRemaining(expiresAt),
     );
-
 
   useEffect(() => {
+    const update = () => {
+      const remaining =
+        getSecondsRemaining(expiresAt);
 
-    const timer =
-      setInterval(() => {
+      setSeconds(remaining);
 
-        setSeconds(
-          calculateTimeLeft(),
-        );
+      if (remaining === 0) {
+        onExpired?.();
+      }
+    };
 
-      }, 1000);
+    update();
 
+    const timer = window.setInterval(
+      update,
+      1000,
+    );
 
     return () =>
-      clearInterval(timer);
-
-  }, [expiresAt]);
-
+      window.clearInterval(timer);
+  }, [
+    expiresAt,
+    onExpired,
+  ]);
 
   const minutes =
     Math.floor(seconds / 60);
@@ -55,22 +65,27 @@ export default function Countdown({
   const remainingSeconds =
     seconds % 60;
 
+  const expired = seconds === 0;
 
   return (
-    <div className="mt-4 text-lg font-bold">
+    <div className="mt-5 rounded-lg bg-gray-100 p-4">
+      <p className="text-sm text-gray-500">
+        Reservation time remaining
+      </p>
 
-      Time remaining:
-
-      <span className="ml-2 text-red-600">
-
-        {minutes}:
-        {remainingSeconds
-          .toString()
-          .padStart(2, '0')
-        }
-
-      </span>
-
+      <p
+        className={`mt-1 text-2xl font-bold ${
+          expired
+            ? 'text-red-600'
+            : 'text-gray-900'
+        }`}
+      >
+        {expired
+          ? 'Expired'
+          : `${minutes}:${remainingSeconds
+              .toString()
+              .padStart(2, '0')}`}
+      </p>
     </div>
   );
 }

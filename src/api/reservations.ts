@@ -1,30 +1,27 @@
 import { api } from './client';
+import type { Reservation } from '../types/product';
 
-export const createReservation =
-  async (
-    productId: string,
-    quantity: number,
-  ) => {
+export async function createReservation(
+  productId: string,
+  quantity: number,
+): Promise<Reservation> {
+  const response = await api.post<Reservation>(
+    '/reservations',
+    {
+      productId,
+      quantity,
+    },
+  );
 
-    const response =
-      await api.post(
-        '/reservations',
-        {
-          productId,
-          quantity,
-        },
-      );
+  return response.data;
+}
 
-    return response.data;
-  };
+export async function getReservation(
+  id: string,
+): Promise<Reservation> {
+  const response = await api.get<Reservation>(
+    `/reservations/${id}`,
+  );
 
-export const getReservation =
-  async (id: string) => {
-
-    const response =
-      await api.get(
-        `/reservations/${id}`,
-      );
-
-    return response.data;
-  };
+  return response.data;
+}
