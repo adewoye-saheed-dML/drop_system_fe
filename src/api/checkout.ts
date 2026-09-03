@@ -13,3 +13,13 @@ export async function checkout(
 
   return response.data;
 }
+
+export async function getOrder(
+  id: string,
+): Promise<Order> {
+  const response = await api.get<Order>(
+    `/checkout/${id}`,
+  );
+
+  return response.data;
+}

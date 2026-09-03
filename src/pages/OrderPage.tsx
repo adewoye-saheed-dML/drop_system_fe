@@ -56,13 +56,9 @@ export default function OrderPage() {
     useMutation({
       mutationFn: () =>
         checkout(id as string),
-
+      
       onSuccess: (order) => {
-        navigate('/success', {
-          state: {
-            order,
-          },
-        });
+        navigate(`/success/${order.id}`);
       },
     });
 

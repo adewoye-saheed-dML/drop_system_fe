@@ -36,7 +36,7 @@ export default function AppRoutes() {
         />
 
         <Route
-          path="/success"
+          path="/success/:id"
           element={<SuccessPage />}
         />
       </Routes>
