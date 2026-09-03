@@ -41,14 +41,15 @@ Products  Reservations
              |
              v
         PostgreSQL
+```
 
-# Concurrency Strategy
+## Concurrency Strategy
 
 The most important correctness requirement is preventing inventory overselling.
 
 Reservation creation runs inside a PostgreSQL transaction and locks the product row with `FOR UPDATE`.
 
-```
+```text
 Request A ----\
 Request B -----+----> Lock product row
 Request C ----/             |
@@ -68,7 +69,7 @@ Request C ----/             |
 
 This serializes concurrent inventory decisions for the same product.
 
-## Checkout Race Protection
+### Checkout Race Protection
 
 Checkout and expiration can occur at approximately the same time.
 
@@ -76,7 +77,7 @@ Both operations lock the reservation row before changing its state.
 
 Therefore the reservation can only transition once:
 
-```
+```text
 ACTIVE
   |
   +--> COMPLETED
@@ -86,7 +87,7 @@ ACTIVE
 
 This prevents inventory from being released incorrectly after a successful checkout.
 
-## Checkout
+### Checkout
 
 The backend calculates the order amount from the product price and reservation quantity.
 
@@ -133,7 +134,7 @@ http://localhost:3000/api-docs
 
 ## Frontend Flow
 
-```
+```text
 Products
    |
    | Reserve
